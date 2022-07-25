@@ -21,7 +21,7 @@ source "../common/common_lib.sh"
 
 function pre_test() {
     LOG_INFO "Start environmental preparation."
-    DNF_INSTALL glusterfs
+    DNF_INSTALL glusterfs-events
     LOG_INFO "End of environmental preparation!"
 }
 
@@ -45,6 +45,7 @@ function post_test() {
     sed -i 's\/usr/sbin/glustereventsd\/usr/sbin/glustereventsd --pid-file /var/run/glustereventsd.pid\g' /usr/lib/systemd/system/glustereventsd.service
     systemctl daemon-reload
     systemctl reload glustereventsd.service
+    systemctl stop glustereventsd.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

@@ -1,5 +1,6 @@
 {
     "path": "$OET_PATH/testcases/cli-test/initscripts",
+    "machine num": 2,
     "cases": [
         {
             "name": "oe_test_service_import-state"
@@ -8,7 +9,8 @@
             "name": "oe_test_service_loadmodules"
         },
         {
-            "name": "oe_test_service_network"
+            "name": "oe_test_service_network",
+            "machine num": 2
         },
         {
             "name": "oe_test_service_netconsole"

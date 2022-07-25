@@ -21,7 +21,7 @@ source "../common/common_lib.sh"
 
 function pre_test() {
     LOG_INFO "Start environmental preparation."
-    DNF_INSTALL glusterfs
+    DNF_INSTALL glusterfs-server
     service=glusterfssharedstorage.service
     log_time=$(date '+%Y-%m-%d %T')
     LOG_INFO "End of environmental preparation!"
@@ -43,7 +43,7 @@ function run_test() {
     CHECK_RESULT $? 0 0 "${service} start failed"
     systemctl status "${service}" | grep "Active: inactive"
     CHECK_RESULT $? 0 0 "${service} start failed"
-    systemctl status "${service}" | grep "glusterfssharedstorage.service: Succeeded"
+    systemctl status "${service}" | grep "glusterfssharedstorage.service" | grep -E "successfully|Succeeded"
     CHECK_RESULT $? 0 0 "${service} start failed"
     test_enabled ${service}
     journalctl --since "${log_time}" -u "${service}" | grep -i "fail\|error" | grep -v -i "DEBUG\|INFO\|WARNING"
@@ -53,6 +53,7 @@ function run_test() {
 
 function post_test() {
     LOG_INFO "start environment cleanup."
+    systemctl stop glusterd.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

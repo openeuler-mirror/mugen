@@ -30,7 +30,7 @@ function run_test() {
     LOG_INFO "Start testing..."
     test_restart "${service}"
     test_enabled "${service}"
-    journalctl --since "${log_time}" -u "${service}" | grep -i "fail\|error" | grep -v "Hardware RNG Device"
+    journalctl --since "${log_time}" -u "${service}" | grep -i "fail\|error" | grep -v "Hardware RNG Device" | grep -v "Initialization Failed"
     CHECK_RESULT $? 0 1 "There is an error message for the log of ${service}"
     test_reload "${service}" 
     LOG_INFO "Finish test!"

@@ -22,6 +22,8 @@ source "../common/common_lib.sh"
 function pre_test() {
     LOG_INFO "Start environmental preparation."
     DNF_INSTALL smartmontools
+    sed -i 's/ConditionVirtualization=no/ConditionVirtualization=/g' /usr/lib/systemd/system/smartd.service
+    systemctl daemon-reload
     LOG_INFO "End of environmental preparation!"
 }
 
@@ -44,6 +46,7 @@ function post_test() {
     systemctl daemon-reload
     systemctl reload smartd.service
     systemctl stop smartd.service
+    sed -i 's/ConditionVirtualization=/ConditionVirtualization=no/g' /usr/lib/systemd/system/smartd.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

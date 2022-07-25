@@ -27,6 +27,7 @@ function pre_test() {
     sed -i "/Group=hadoop/a SuccessExitStatus=143" /usr/lib/systemd/system/hadoop-namenode.service
     systemctl daemon-reload
     expect <<EOF
+        set timeout 600
         spawn sudo -u hdfs hdfs namenode -format
         expect {
             "(Y or N)" {
@@ -37,11 +38,9 @@ function pre_test() {
 EOF
     systemctl start hadoop-namenode.service
     systemctl start hadoop-datanode.service
-    systemctl start zookeeper.service
     sudo -u hdfs hadoop fs -chmod 777 /
     sed -i "/<configuration>/a <property>\n<name>hbase.unsafe.stream.capability.enforce<\/name>\n<value>false<\/value>\n<\/property>" /etc/hbase/hbase-site.xml
     sed -i "s/localhost:8020/localhost:8111/g" /etc/hbase/hbase-site.xml
-    systemctl start hbase-master.service
     LOG_INFO "End of environmental preparation!"
 }
 
@@ -56,7 +55,7 @@ function post_test() {
     LOG_INFO "start environment cleanup."
     systemctl stop hadoop-namenode.service
     systemctl stop hadoop-datanode.service
-    systemctl stop zookeeper.service
+    systemctl stop hbase-rest.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

@@ -21,7 +21,7 @@ source "../common/common_lib.sh"
 
 function pre_test() {
     LOG_INFO "Start environmental preparation."
-    DNF_INSTALL glusterfs
+    DNF_INSTALL glusterfs-server
     LOG_INFO "End of environmental preparation!"
 }
 
@@ -34,6 +34,7 @@ function run_test() {
 
 function post_test() {
     LOG_INFO "start environment cleanup."
+    systemctl stop glusterd.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }
