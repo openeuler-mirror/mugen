@@ -22,6 +22,7 @@ function pre_test() {
     LOG_INFO "Start environmental preparation."
     DNF_INSTALL "rpmdevtools"
     pkg_name=$(dnf list | head -n 3 | tail -n 1 | awk '{print $1}' | awk 'BEGIN {FS="."} {print $1}')
+    pkg=$(echo "${pkg_name}") | awk -F "-" '{print $1}'
     yumdownloader ${pkg_name}
     test -d ~/rpmbuild && rm -rf ~/rpmbuild && LOG_INFO "Successfully deleted this dir."
     LOG_INFO "End of environmental preparation."
@@ -74,7 +75,7 @@ function run_test() {
     rpmdev-sort -h | grep -A 4 "rpmdev-sort" | grep "Supported formats:"
     CHECK_RESULT $? 0 0 "Failed option: rpmdev-sort -h"
 
-    rpmdev-sum ${pkg_name}*rpm | grep "${pkg_name}"
+    rpmdev-sum ${pkg_name}*rpm | grep "${pkg}"
     CHECK_RESULT $? 0 0 "Failed command: rpmdev-sum"
 
     LOG_INFO "End to run test."

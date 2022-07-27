@@ -24,6 +24,7 @@ function pre_test() {
     useradd user_test
     su user_test -c "mkdir -p /home/user_test/rpmbuild/RPMS/${NODE1_FRAME}"
     pkg_name=$(dnf list | head -n 3 | tail -n 1 | awk '{print $1}' | awk 'BEGIN {FS="."} {print $1}')
+    pkg=$(echo "${pkg_name}") | awk -F "-" '{print $1}'
     yumdownloader ${pkg_name}
     chown user_test *rpm
     chmod 755 *rpm
@@ -102,7 +103,7 @@ function run_test() {
     CHECK_RESULT $? 0 0 "Failed option: -t"
     rpminfo -T ./tmp_dir ${pkg_name1}*rpm
 
-    rpmls -l ${pkg_name}*rpm | grep "${pkg_name}"
+    rpmls -l ${pkg_name}*rpm | grep "${pkg}"
     CHECK_RESULT $? 0 0 "Failed command: rpmls"
 
     rpmpeek -h | grep -A 1 "Usage:" | grep "rpmpeek"

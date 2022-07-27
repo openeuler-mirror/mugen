@@ -40,7 +40,7 @@ function run_test() {
 EOF
     CHECK_RESULT $?
     expect <<EOF
-        spawn ssh remote-server2 11
+        spawn ssh remote-server2
         expect {
             "*yes/no*" {
                 send "yes\\r"
