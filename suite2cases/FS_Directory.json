@@ -80,6 +80,28 @@
         },
         {
             "name": "oe_test_FSIO_dir_create_lack_inode"
+        },
+        {
+            "name": "oe_test_FSIO_dir_create_long_dirname"
+        },
+        {
+            "name": "oe_test_FSIO_dir_modify_name"
+        },
+        {
+            "name": "oe_test_FSIO_dir_mv_cp_1"
+        },
+        {
+            "name": "oe_test_FSIO_dir_mv_cp_2"
+        },
+        {
+            "name": "oe_test_FSIO_dir_rm"
+        },
+        {
+            "name": "oe_test_FSIO_dir_umask"
+        },
+        {
+            "name": "oe_test_FSIO_dir_umask_exit",
+            "machine num": 2
         }
     ]
 }
