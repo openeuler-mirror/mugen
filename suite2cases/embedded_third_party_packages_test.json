@@ -1,0 +1,56 @@
+{
+    "path": "$OET_PATH/testcases/embedded-test/third_party_packages_test",
+    "cases": [
+        {
+            "name": "oe_test_busybox_test_001"
+        },
+        {
+            "name": "oe_test_json-c_test_001"
+        },
+        {
+            "name": "oe_test_dosfstools_test_001"
+        },
+        {
+            "name": "oe_test_e2fsprogs_test_001"
+        },
+        {
+            "name": "oe_test_logrotate_test_001"
+        },
+        {
+            "name": "oe_test_nfs-utils_test_001"
+        },
+        {
+            "name": "oe_test_libffi_test_001"
+        },
+        {
+            "name": "oe_test_libcap_test_001"
+        },
+        {
+            "name": "oe_test_shadow_test_001"
+        },
+        {
+            "name": "oe_test_pam_test_001"
+        },
+        {
+            "name": "oe_test_popt_test_001"
+        },
+        {
+            "name": "oe_test_util-linux_test_001"
+        },
+        {
+            "name": "oe_test_elfutils_test_001"
+        },
+        {
+            "name": "oe_test_procps_test_001"
+        },
+        {
+            "name": "oe_test_ncurses_test_001"
+        },
+        {
+            "name": "oe_test_libpcap_test_001"
+        },
+        {
+            "name": "oe_test_less_test_001"
+        }
+    ]
+}
