@@ -1,0 +1,47 @@
+{
+    "path": "$OET_PATH/testcases/cli-test/podman",
+    "cases": [
+        {
+            "name": "oe_test_service_podman-restart"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_07"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_04"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_01"
+        },
+        {
+            "name": "oe_test_service_podman-auto-update"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_10"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_08"
+        },
+        {
+            "name": "oe_test_service_podman"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_03"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_02"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_09"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_06"
+        },
+        {
+            "name": "oe_test_socket_podman"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_05"
+        }
+    ]
+}
