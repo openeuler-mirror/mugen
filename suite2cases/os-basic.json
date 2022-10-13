@@ -19,6 +19,9 @@
         {
             "name": "oe_test_awk"
         },
+	{
+	    "name": "oe_test_ulimit"
+	},
         {
             "name": "oe_test_versioninfo"
         },
