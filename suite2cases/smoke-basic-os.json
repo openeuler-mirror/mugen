@@ -65,6 +65,9 @@
             "name": "oe_test_iscsi"
         },
         {
+            "name": "oe_test_krb5"
+        },
+        {
             "name": "oe_test_ln_001"
         },
         {
