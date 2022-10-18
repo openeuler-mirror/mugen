@@ -18,20 +18,17 @@ source "$OET_PATH/libs/locallibs/common_lib.sh"
 
 function deploy_env() {
     DNF_INSTALL "podman podman-docker"
-    echo -e "[registries.search]
-registries = ['docker.io']
-
-[registries.insecure]
-registries = []
-
-[registries.block]
-registries = []
+    echo -e "
+unqualified-search-registries = ['docker.io']    
+[[registry]]
+prefix = 'docker.io'
+location = 'a74l47xi.mirror.aliyuncs.com'
 " >/etc/containers/registries.conf
 }
 
 function clear_env() {
-    podman stop postgres
+    podman stop --all
     podman rm --all
-    podman rmi -f --all
+    podman rmi --all
     DNF_REMOVE
 }
