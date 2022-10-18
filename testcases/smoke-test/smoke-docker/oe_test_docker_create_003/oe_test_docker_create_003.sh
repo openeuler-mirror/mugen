@@ -30,7 +30,7 @@ function run_test() {
     CHECK_RESULT $?
     docker inspect -f {{.State.Status}} ${containers_id} | grep running
     CHECK_RESULT $?
-    
+
     docker logs ${containers_id} | grep "hello world"
     CHECK_RESULT $?
     LOG_INFO "End of testcase execution."
