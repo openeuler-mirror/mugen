@@ -20,12 +20,16 @@
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_isulad_env() {
-    DNF_INSTALL "iSulad tar"
+    DNF_INSTALL "iSulad tar wget"
     clean_isulad_env
     if grep -i version= /etc/os-release | awk -F '"' '{print$2}' | grep "("; then
         os_version=$(grep -i version= /etc/os-release | awk -F '"' '{print$2}' | tr '()' '- ' | sed s/[[:space:]]//g)
     else
-        os_version=$(grep -i version= /etc/os-release | awk -F '"' '{print$2}' | awk -F ' ' '{print$1"-"$2}')
+        if grep -i version= /etc/os-release | awk -F '"' '{print$2}' | grep "LTS"; then
+            os_version=$(grep -i version= /etc/os-release | awk -F '"' '{print$2}' | awk -F ' ' '{print$1"-"$2}')
+        else
+            os_version=$(grep -i version= /etc/os-release | awk -F '"' '{print$2}')
+        fi
     fi
     wget -P ../common/ https://repo.openeuler.org/openEuler-${os_version}/docker_img/${NODE1_FRAME}/openEuler-docker.${NODE1_FRAME}.tar.xz
     isula load -i ../common/openEuler-docker.${NODE1_FRAME}.tar.xz
