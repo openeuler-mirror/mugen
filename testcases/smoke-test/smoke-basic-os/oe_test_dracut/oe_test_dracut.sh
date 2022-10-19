@@ -14,18 +14,31 @@
 # @Contact   :   liujingjing25812@163.com
 # @Date      :   2022/06/08
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of dbus-send
+# @Desc      :   Test the basic functions of dracut
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    kernel_ver=$(rpm -qa kernel | sort | tail -n 1 | awk -F '-' '{print $2"-"$3}')
+    mv -f /boot/initramfs-$kernel_ver.img /boot/initramfs-$kernel_ver.img.bak
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start to run test."
-    dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep array
-    CHECK_RESULT $? 0 0 "Failed to execute dbus-send"
-    dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep org.freedesktop
-    CHECK_RESULT $? 0 0 "Failed to check dbus-send"
+    dracut
+    CHECK_RESULT $? 0 0 "Failed to execute dracut"
+    test -f /boot/initramfs-$kernel_ver.img
+    CHECK_RESULT $? 0 0 "Failed to check dracut"
     LOG_INFO "End to run test."
+}
+
+function post_test() {
+    LOG_INFO "Start to restore the test environment."
+    mv -f /boot/initramfs-$kernel_ver.img.bak /boot/initramfs-$kernel_ver.img
+    LOG_INFO "End to restore the test environment."
 }
 
 main "$@"

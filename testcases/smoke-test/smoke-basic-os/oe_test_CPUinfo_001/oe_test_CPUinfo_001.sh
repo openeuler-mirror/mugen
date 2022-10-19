@@ -23,6 +23,7 @@ function pre_test() {
     LOG_INFO "Start to prepare the test environment."
     OLD_LANG=$LANG
     export LANG=en_US.UTF-8
+    DNF_INSTALL lshw
     LOG_INFO "End to prepare the test environment."
 }
 
@@ -37,7 +38,7 @@ function run_test() {
     lshw -c cpu | grep "capacity" | grep "Hz"
     CHECK_RESULT $?
 
-    if [ "$(uname -i)"x == "aarch64"x ]; then
+    if [ "$FRAME"x == "aarch64"x ]; then
         grep "0x48" /proc/cpuinfo
         CHECK_RESULT $?
 
@@ -75,6 +76,7 @@ function run_test() {
 function post_test() {
     LOG_INFO "start environment cleanup."
     export LANG=${OLD_LANG}
+    DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }
 

@@ -14,17 +14,17 @@
 # @Contact   :   liujingjing25812@163.com
 # @Date      :   2022/06/08
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of dbus-send
+# @Desc      :   Test the basic functions of dbus-uuidgen
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function run_test() {
     LOG_INFO "Start to run test."
-    dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep array
-    CHECK_RESULT $? 0 0 "Failed to execute dbus-send"
-    dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep org.freedesktop
-    CHECK_RESULT $? 0 0 "Failed to check dbus-send"
+    dbus-uuidgen
+    CHECK_RESULT $? 0 0 "Failed to execute dbus-uuidgen"
+    dbus-uuidgen | wc -L | grep 32
+    CHECK_RESULT $? 0 0 "Failed to get the number of uuids"
     LOG_INFO "End to run test."
 }
 

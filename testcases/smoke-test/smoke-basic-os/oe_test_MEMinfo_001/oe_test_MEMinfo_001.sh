@@ -19,6 +19,12 @@
 
 source "$OET_PATH/libs/locallibs/common_lib.sh"
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    DNF_INSTALL lshw
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start testing..."
     lshw -c memory
@@ -32,15 +38,19 @@ function run_test() {
     if [[ "$(dmidecode -s system-product-name)" =~ "KVM" ]]; then
         lshw -c memory | grep "bank" -A 5 | grep "size"
         CHECK_RESULT $?
+        test $(lshw -c memory | grep "bank" | wc -l) -eq 1 && test $(lshw -c memory | grep bank -A 10 | grep size | wc -l) -eq 1
+        CHECK_RESULT $?
     else
         lshw -c memory | grep "bank" -A 8 | grep "size"
         CHECK_RESULT $?
     fi
-    if [[ "$(dmidecode -s system-product-name)" =~ "KVM" ]]; then
-        test $(lshw -c memory | grep "bank" | wc -l) -eq 1 && test $(lshw -c memory | grep bank -A 10 | grep size | wc -l) -eq 1
-        CHECK_RESULT $?
-    fi
     LOG_INFO "Finish test!"
+}
+
+function post_test() {
+    LOG_INFO "start environment cleanup."
+    DNF_REMOVE
+    LOG_INFO "Finish environment cleanup!"
 }
 
 main $@

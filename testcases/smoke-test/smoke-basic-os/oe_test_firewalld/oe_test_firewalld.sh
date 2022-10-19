@@ -12,20 +12,31 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/08
+# @Date      :   2022/07/06
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of dbus-send
+# @Desc      :   Test the basic functions of firewalld
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    touch /var/lib/ebtables/lock
+    systemctl status firewalld | grep -E "fail|dead" && systemctl start firewalld
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start to run test."
-    dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep array
-    CHECK_RESULT $? 0 0 "Failed to execute dbus-send"
-    dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep org.freedesktop
-    CHECK_RESULT $? 0 0 "Failed to check dbus-send"
+    firewall-cmd --reload | grep success
+    CHECK_RESULT $? 0 0 "Failed to execute firewall-cmd"
     LOG_INFO "End to run test."
+}
+
+function post_test() {
+    LOG_INFO "Start to restore the test environment."
+    rm -rf /var/lib/ebtables/lock
+    LOG_INFO "End to restore the test environment."
 }
 
 main "$@"

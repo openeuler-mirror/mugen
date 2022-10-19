@@ -12,27 +12,40 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/08
+# @Date      :   2022/07/06
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of dbus-monitor
+# @Desc      :   Test the basic functions of dhclient
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    DNF_INSTALL net-tools
+    cp /etc/resolv.conf /etc/resolv.conf.bak
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start to run test."
-    dbus-monitor --system >testlog &
-    CHECK_RESULT $? 0 0 "Failed to execute dbus-monitor"
-    SLEEP_WAIT 3
-    grep signal testlog | grep "sender=org.freedesktop.DBus"
-    CHECK_RESULT $? 0 0 "Failed to check dbus-monitor"
+    if ps -aux | grep -w "dhclient" | grep -vE "grep|sh"; then
+        netstat -aupx | grep dhclient | awk '{print $NF}' | uniq | wc -l | grep 1
+        CHECK_RESULT $? 0 0 "There are multiple ports"
+        echo "" >/etc/resolv.conf
+        systemctl restart NetworkManager
+        SLEEP_WAIT 3
+        grep "nameserver" /etc/resolv.conf
+        CHECK_RESULT $? 0 0 "Different files"
+        netstat -aupx | grep dhclient | awk '{print $NF}' | uniq | wc -l | grep 1
+        CHECK_RESULT $? 0 0 "Not just one ports"
+    fi
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    kill -9 $(pgrep dbus-monitor)
-    rm -rf testlog
+    mv -f /etc/resolv.conf.bak /etc/resolv.conf
+    DNF_REMOVE
     LOG_INFO "End to restore the test environment."
 }
 

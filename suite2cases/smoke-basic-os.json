@@ -264,6 +264,36 @@
         },
         {
             "name": "oe_test_dbus-send"
+        },
+        {
+            "name": "oe_test_dbus"
+        },
+        {
+            "name": "oe_test_dbus-uuidgen"
+        },
+        {
+            "name": "oe_test_dhclient_01"
+        },
+        {
+            "name": "oe_test_dracut"
+        },
+        {
+            "name": "oe_test_ebtables"
+        },
+        {
+            "name": "oe_test_ethtool_01"
+        },
+        {
+            "name": "oe_test_firewalld"
+        },
+        {
+            "name": "oe_test_glibc_getaddrinfo_01"
+        },
+        {
+            "name": "oe_test_glibc_getaddrinfo_02"
+        },
+        {
+            "name": "oe_test_grub2_mkconfig"
         }
     ]
 }

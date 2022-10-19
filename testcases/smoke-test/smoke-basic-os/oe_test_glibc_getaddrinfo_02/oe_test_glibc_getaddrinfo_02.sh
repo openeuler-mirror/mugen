@@ -12,27 +12,40 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/08
+# @Date      :   2022/06/09
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of dbus-monitor
+# @Desc      :   Test the basic functions of wget
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    DNF_INSTALL wget
+    OLD_LANG=$LANG
+    export LANG=en_US.UTF-8
+    cp /etc/resolv.conf /etc/resolv.conf.bak
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start to run test."
-    dbus-monitor --system >testlog &
-    CHECK_RESULT $? 0 0 "Failed to execute dbus-monitor"
-    SLEEP_WAIT 3
-    grep signal testlog | grep "sender=org.freedesktop.DBus"
-    CHECK_RESULT $? 0 0 "Failed to check dbus-monitor"
+    echo "" >/etc/resolv.conf
+    wget www.baidu.com 2>&1 | grep "unable to resolve host address"
+    CHECK_RESULT $? 0 0 "Wget executed successfully"
+    mv -f /etc/resolv.conf.bak /etc/resolv.conf
+    wget www.baidu.com
+    CHECK_RESULT $? 0 0 "Failed to execute wget"
+    test -f index.html
+    CHECK_RESULT $? 0 0 "Failed to check wget"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    kill -9 $(pgrep dbus-monitor)
-    rm -rf testlog
+    DNF_REMOVE
+    rm -rf index.html
+    export LANG=${OLD_LANG}
     LOG_INFO "End to restore the test environment."
 }
 
