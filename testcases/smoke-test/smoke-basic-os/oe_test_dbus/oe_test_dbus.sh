@@ -26,11 +26,11 @@ function run_test() {
     kill -9 $(pgrep dbus)
     CHECK_RESULT $? 0 0 "Failed to kill the dbus process"
     ps -ef | grep dbus
-    CHECK_RESULT $? 0 0 "Failed to run dbus service"
+    CHECK_RESULT $? 0 0 "Failed to exist dbus service"
     dbus-send --system --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ListActivatableNames | grep array
     CHECK_RESULT $? 0 0 "Failed to execute dbus-send"
     systemctl status dbus | grep running
-    CHECK_RESULT $? 0 0 "Failed to run dbus service"
+    CHECK_RESULT $? 0 0 "Failed to check dbus service"
     LOG_INFO "End to run test."
 }
 

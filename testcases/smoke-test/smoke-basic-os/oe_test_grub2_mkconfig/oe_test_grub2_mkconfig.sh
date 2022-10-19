@@ -24,11 +24,11 @@ function run_test() {
     grub2-mkconfig -o tmp_grub_cfg
     CHECK_RESULT $? 0 0 "Failed to execute grub2-mkconfig"
     grep "vmlinuz" tmp_grub_cfg >testlog1
-    CHECK_RESULT $? 0 0 "Failed to execute grub2-mkconfig"
+    CHECK_RESULT $? 0 0 "Failed to find vmlinuz in tmp_grub_cfg"
     grep -r "vmlinuz" /boot | awk -F 'cfg:' '{print $NF}' | grep linux >testlog2
-    CHECK_RESULT $? 0 0 "Failed to execute grub2-mkconfig"
+    CHECK_RESULT $? 0 0 "Failed to find vmlinuz in /boot"
     diff -Bw testlog1 testlog2
-    CHECK_RESULT $? 0 0 "Failed to execute grub2-mkconfig"
+    CHECK_RESULT $? 0 0 "Files are different"
     LOG_INFO "End to run test."
 }
 

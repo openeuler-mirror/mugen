@@ -37,7 +37,7 @@ function run_test() {
         grep "nameserver" /etc/resolv.conf
         CHECK_RESULT $? 0 0 "Different files"
         netstat -aupx | grep dhclient | awk '{print $NF}' | uniq | wc -l | grep 1
-        CHECK_RESULT $? 0 0 "There are multiple ports"
+        CHECK_RESULT $? 0 0 "Not just one ports"
     fi
     LOG_INFO "End to run test."
 }

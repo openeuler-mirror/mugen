@@ -31,7 +31,7 @@ function run_test() {
     dracut
     CHECK_RESULT $? 0 0 "Failed to execute dracut"
     test -f /boot/initramfs-$kernel_ver.img
-    CHECK_RESULT $? 0 0 "Failed to execute dracut"
+    CHECK_RESULT $? 0 0 "Failed to check dracut"
     LOG_INFO "End to run test."
 }
 
