@@ -28,7 +28,7 @@ function pre_test() {
 function run_test() {
     LOG_INFO "Start to run test."
     cur_date=$(date +%Y%m%d%H%M%S)
-    ls -l /usr | awk '{print $9}' >./actual_name$cur_date
+    ls -l /usr | grep -v "total" | awk '{print $9}' >./actual_name$cur_date
     diff ./actual_name$cur_date ./expect_name
     CHECK_RESULT $? 0 0 "The directory or file on /usr has some errors."
     ls -l /usr | awk '{print $1}' | grep -v "total" | sort | uniq | cut -c 1-10 >./actual_access$cur_date

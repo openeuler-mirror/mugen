@@ -29,7 +29,7 @@ function run_test() {
     LOG_INFO "Start executing testcase."
     echo '发放' | opencc -c s2t | grep '發放'
     CHECK_RESULT $?
-    echo '确保补贴临时补充及时足额发放到位' | opencc -c s2t | grep '確保補貼臨時補充及時足額髮放到位'
+    echo '确保补贴临时补充及时足额发放到位' | opencc -c s2t | grep '確保補貼臨時補充及時足額發放到位'
     CHECK_RESULT $?
     echo '困难' | opencc -c s2t | grep '困難'
     CHECK_RESULT $?
