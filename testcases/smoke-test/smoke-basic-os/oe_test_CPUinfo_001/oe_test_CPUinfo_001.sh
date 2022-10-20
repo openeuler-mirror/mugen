@@ -38,7 +38,7 @@ function run_test() {
     lshw -c cpu | grep "capacity" | grep "Hz"
     CHECK_RESULT $?
 
-    if [ "$FRAME"x == "aarch64"x ]; then
+    if [ "$NODE1_FRAME"x == "aarch64"x ]; then
         grep "0x48" /proc/cpuinfo
         CHECK_RESULT $?
 

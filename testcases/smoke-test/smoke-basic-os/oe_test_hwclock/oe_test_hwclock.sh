@@ -12,29 +12,35 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/07
+# @Date      :   2022/06/22
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of cpio
+# @Desc      :   Test the basic functions of hwclock
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    OLD_LANG=$LANG
+    export LANG=en_US.UTF-8
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start to run test."
-    mkdir cpiotest
-    echo "Hello" >cpiotest/test1
-    find . -depth -print | cpio -o >dir.cpio 2>&1
-    CHECK_RESULT $? 0 0 "Failed to execute cpio"
-    grep -a "Hello" dir.cpio
-    CHECK_RESULT $? 0 0 "Failed to find Hello"
-    grep -a "block" dir.cpio
-    CHECK_RESULT $? 0 0 "Failed to find block"
+    hwclock &
+    hwclock >testlog 2>&1
+    SLEEP_WAIT 4
+    grep "Cannot access" testlog
+    CHECK_RESULT $? 0 0 "Failed to execute hwclock"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf cpiotest dir.cpio
+    rm -rf testlog
+    kill -9 $(pgrep hwclock)
+    export LANG=${OLD_LANG}
     LOG_INFO "End to restore the test environment."
 }
 
