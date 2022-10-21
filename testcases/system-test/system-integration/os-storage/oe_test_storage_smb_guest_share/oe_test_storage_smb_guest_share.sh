@@ -25,6 +25,7 @@ function pre_test() {
     sed -i "/[global]/a\\\tmap to guest = Bad User" /etc/samba/smb.conf
     sed -i "/[global]/a\\\tguest account = $Guest_user" /etc/samba/smb.conf
     sed -i "/[global]/a\\\tusershare prefix allow list = /data /srv" /etc/samba/smb.conf
+    sed -i "/[global]/a\\\interfaces = enp3s0 9.82.234.94/24" /etc/samba/smb.conf
     LOG_INFO "Environmental preparation is over."
 }
 
