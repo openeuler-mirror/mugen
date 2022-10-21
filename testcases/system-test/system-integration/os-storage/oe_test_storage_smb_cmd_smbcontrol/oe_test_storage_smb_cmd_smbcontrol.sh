@@ -21,6 +21,7 @@ source ${OET_PATH}/libs/locallibs/common_lib.sh
 function pre_test() {
     LOG_INFO "Start environment preparation."
     DNF_INSTALL samba
+    sed -i "/[global]/a\\\interfaces = enp3s0 9.82.234.94/24" /etc/samba/smb.conf
     LOG_INFO "Environmental preparation is over."
 }
 
