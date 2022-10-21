@@ -44,6 +44,9 @@
             "name": "oe_test_file_001"
         },
         {
+            "name": "oe_test_golang"
+        },
+        {
             "name": "oe_test_grep_001"
         },
         {
