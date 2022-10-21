@@ -35,7 +35,26 @@ function pre_test() {
 function run_test() {
     LOG_INFO "Start to run test."
     # start vnc server
-    vncserver ${vncConnName}
+    expect <<EOF
+        spawn vncserver ${vncConnName}
+        expect {
+            "Password:" {
+                send "${NODE1_PASSWORD}\\r"
+            }
+        }
+        expect {
+            "Verify:" {
+                send "${NODE1_PASSWORD}\\r"
+            }
+        } 
+        expect {
+            "y/n*" {
+                send "y\\r"
+            }
+        }
+        expect eof
+EOF
+
     IS_FREE_PORT ${vncConnPort} ""
     CHECK_RESULT $? 1 0 "vnc server doesn't start up"
 

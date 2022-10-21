@@ -27,7 +27,6 @@ function config_params()
     TEST_TIME=5
     PROXY_SERVER='www.baidu.com'
     PROXY_PORT=80
-    WEBBENCH_VERSION=$(rpm -qa webbench | awk -F '-' '{print $2}')
     LOG_INFO "End to config params of the case."
 }
 
@@ -35,6 +34,7 @@ function pre_test()
 {
     LOG_INFO "Start to prepare the test environment."
     DNF_INSTALL webbench
+    WEBBENCH_VERSION=$(rpm -qa webbench | awk -F '-' '{print $2}')
     LOG_INFO "End to prepare the test environment."
 }
 

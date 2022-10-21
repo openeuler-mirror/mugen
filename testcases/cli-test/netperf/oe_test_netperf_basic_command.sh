@@ -20,7 +20,6 @@ source "./common_lib.sh"
 function pre_test() {
     LOG_INFO "Start to prepare the test environment."
     pre_env
-    touch test.txt
     echo teststring > test.txt
     LOG_INFO "End to prepare the test environment."
 }
@@ -69,7 +68,7 @@ function run_test() {
     CHECK_RESULT $? 0 0 "netperf -f M execution failed."
     netperf -H "$NODE2_IPV4" -p ${rdport} -l 5 | grep " 5."
     CHECK_RESULT $? 0 0 "netperf -l 5 execution failed."
-    netperf -H "$NODE2_IPV4" -p ${rdport} -t UDP_STREAM -l 1 -- -m 1024 | grep "1024"
+    netperf -H "$NODE2_IPV4" -p ${rdport} -t UDP_STREAM -l 1 -- -m 1024 -R 1 | grep "1024"
     CHECK_RESULT $? 0 0 "netperf -m 1024 execution failed."
     netperf -H "$NODE2_IPV4" -p ${rdport} -P 0 -l 1 -- -m 1024 | grep "MIGRATED"
     CHECK_RESULT $? 0 1 "netperf -P 0 execution failed."

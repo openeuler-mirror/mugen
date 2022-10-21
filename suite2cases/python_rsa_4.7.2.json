@@ -2,7 +2,7 @@
     "path": "\"${OET_PATH}\"/testcases/cli-test/python_rsa",
     "cases": [
         {
-            "name": "oe_test_python3-rsa"
+            "name": "oe_test_python3-rsa_4.7.2"
         }
     ]
 }

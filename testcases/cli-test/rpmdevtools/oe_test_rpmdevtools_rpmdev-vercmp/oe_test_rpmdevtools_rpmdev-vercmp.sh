@@ -76,7 +76,8 @@ function run_test() {
     CHECK_RESULT $? 0 0 "Failed option: -n"
     rm -rf /tmp/spectool*
     spectool -D rpmdevtools.spec
-    test $(ls -l /tmp/spectool* | wc -l) == 4
+    CHECK_RESULT $? 0 0 "Failed option: -D"
+    test $(ls -l /tmp/spectool* | wc -l) -ge 4
     CHECK_RESULT $? 0 0 "Failed option: -D"
 
     LOG_INFO "End to run test."

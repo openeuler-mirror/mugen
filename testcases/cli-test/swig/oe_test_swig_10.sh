@@ -45,7 +45,7 @@ function run_test() {
     CHECK_RESULT $?
     test -f /tmp/example.java -a -f /tmp/exampleJNI.java && rm -rf /tmp/example.java /tmp/exampleJNI.java
     CHECK_RESULT $?
-    swig -java -pcreversion example.i | grep -i "pcre version"
+    swig -java -pcreversion example.i | grep -i "pcre" | grep -i "version"
     CHECK_RESULT $?
     swig -java example.i
     cp -rf example_wrap.c example_wrap.c-bak

@@ -27,32 +27,45 @@ function pre_test() {
 
 function run_test() {
     LOG_INFO "Start to run test."
-    bundle gem testgem01 --coc | grep "CODE_OF_CONDUCT.md"
+    expect <<EOF
+       log_file bundle_log
+       spawn bundle gem testgem01 --coc
+       expect "" {send "y\\r"}
+       expect eof
+EOF
+    SLEEP_WAIT 5
+    grep "CODE_OF_CONDUCT.md" bundle_log
     CHECK_RESULT $? 0 0 "Check gem testgem --coc failed."
-    bundle gem testgem02 --ext | grep "ext"
-    CHECK_RESULT $? 0 0 "Check gem testgem --ext failed."
-    bundle gem testgem03 --no-ext | grep "ext"
-    CHECK_RESULT $? 1 0 "Check gem testgem --no-ext failed."
-    bundle gem testgem04 --mit | grep "LICENSE.txt"
-    CHECK_RESULT $? 0 0 "Check gem testgem --mit failed."
-    bundle gem testgem05 --no-mit | grep "LICENSE.txt"
-    CHECK_RESULT $? 1 0 "Check gem testgem --no-mit failed."
-    bundle gem testgem06 --ci travis | grep "travis.yml"
-    CHECK_RESULT $? 0 0 "Check gem testgem --ci failed."
-    bundle update --all | grep "Bundle updated!"
-    CHECK_RESULT $? 0 0 "Check bundle update --all failed."
-    bundle update --group development | grep "Bundle updated!"
-    CHECK_RESULT $? 0 0 "Check bundle update --group failed."
-    bundle update --source rails | grep "Bundle updated!"
-    CHECK_RESULT $? 0 0 "Check bundle update --source failed."
-    bundle update --ruby | grep "Bundle updated!"
-    CHECK_RESULT $? 0 0 "Check bundle update --ruby failed."
-    LOG_INFO "End to run test."
+    expect <<EOF
+       log_file bundle_log2
+       spawn  bundle gem testgem02 --ext
+       expect "" {send "y\\r"}
+       expect eof
+EOF
+   grep "ext" bundle_log2
+   CHECK_RESULT $? 0 0 "Check gem testgem --ext failed."
+   bundle gem testgem03 --no-ext | grep "ext"
+   CHECK_RESULT $? 1 0 "Check gem testgem --no-ext failed."
+   bundle gem testgem04 --mit | grep "LICENSE.txt"
+   CHECK_RESULT $? 0 0 "Check gem testgem --mit failed."
+   bundle gem testgem05 --no-mit | grep "LICENSE.txt"
+   CHECK_RESULT $? 1 0 "Check gem testgem --no-mit failed."
+   bundle gem testgem06 --ci travis | grep "travis.yml"
+   CHECK_RESULT $? 0 0 "Check gem testgem --ci failed."
+   bundle update --all | grep "Bundle updated!"
+   CHECK_RESULT $? 0 0 "Check bundle update --all failed."
+   bundle update --group development | grep "Bundle updated!"
+   CHECK_RESULT $? 0 0 "Check bundle update --group failed."
+   bundle update --source rails | grep "Bundle updated!"
+   CHECK_RESULT $? 0 0 "Check bundle update --source failed."
+   bundle update --ruby | grep "Bundle updated!"
+   CHECK_RESULT $? 0 0 "Check bundle update --ruby failed."
+   LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf Gemfile testgem* .bundle
+    rm -rf Gemfile testgem* .bundle bundle_log*
     DNF_REMOVE
     LOG_INFO "End to restore the test environment."
 }
