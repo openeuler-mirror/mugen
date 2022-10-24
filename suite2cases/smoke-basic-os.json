@@ -297,6 +297,36 @@
         },
         {
             "name": "oe_test_grub2_mkconfig"
+        },
+        {
+            "name": "oe_test_gzip"
+        },
+        {
+            "name": "oe_test_hwclock"
+        },
+        {
+            "name": "oe_test_hwdata"
+        },
+        {
+            "name": "oe_test_ifconfig_ipv6_01"
+        },
+        {
+            "name": "oe_test_ip6tables_01"
+        },
+        {
+            "name": "oe_test_ip6tables_02"
+        },
+        {
+            "name": "oe_test_ip_ipv6_01"
+        },
+        {
+            "name": "oe_test_ip_ipv6_02"
+        },
+        {
+            "name": "oe_test_ip_ipv6_03"
+        },
+        {
+            "name": "oe_test_ip_ipv6_04"
         }
     ]
 }

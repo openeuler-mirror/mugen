@@ -12,29 +12,36 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/07
+# @Date      :   2022/06/09
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of cpio
+# @Desc      :   Test the basic functions of gzip
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
+function pre_test() {
+    LOG_INFO "Start to prepare the test environment."
+    echo "aaa" >test1.txt
+    echo "bbb" >test2.txt
+    LOG_INFO "End to prepare the test environment."
+}
+
 function run_test() {
     LOG_INFO "Start to run test."
-    mkdir cpiotest
-    echo "Hello" >cpiotest/test1
-    find . -depth -print | cpio -o >dir.cpio 2>&1
-    CHECK_RESULT $? 0 0 "Failed to execute cpio"
-    grep -a "Hello" dir.cpio
-    CHECK_RESULT $? 0 0 "Failed to find Hello"
-    grep -a "block" dir.cpio
-    CHECK_RESULT $? 0 0 "Failed to find block"
+    cmp -l test1.txt test2.txt >testlog1
+    CHECK_RESULT $? 1 0 "Failed to execute cmp"
+    gzip test1.txt
+    gzip test2.txt
+    zcmp --verbose test1.txt.gz test2.txt.gz >testlog2
+    CHECK_RESULT $? 1 0 "Failed to execute zcmp"
+    diff -w testlog1 testlog2
+    CHECK_RESULT $? 0 0 "File is different"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf cpiotest dir.cpio
+    rm -rf test*
     LOG_INFO "End to restore the test environment."
 }
 
