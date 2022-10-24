@@ -1,0 +1,11 @@
+{
+    "path": "$OET_PATH/testcases/embedded-test/application_develop_tests",
+    "cases": [
+        {
+            "name": "oe_test_hello_world_test"
+        },
+        {
+            "name": "oe_test_kernel_hello_world_test"
+        }
+    ]
+}
