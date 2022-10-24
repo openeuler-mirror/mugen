@@ -1,0 +1,9 @@
+# logrotate ignore casename[#reason]
+test-0054.sh            # date: invalid date '60 day ago'
+test-0055.sh            # date: invalid date '60 hour ago'
+test-0056.sh            # date: invalid date '60 day ago'
+#test-0058.sh           # error: error opening /root/tmp_test/test/test-0058/test.log.tmp: No such file or directory
+test-0066.sh            # date: invalid date '1 day ago'
+test-0071.sh            # touch: invalid option -- 't'
+test-0085.sh            # touch: invalid option -- 't'
+test-0086.sh            # touch: invalid option -- 't'

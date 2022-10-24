@@ -1,0 +1,15 @@
+# e2fsprogs ignore casename[#reason]
+d_xattr_sorting                 # perl: command not found
+f_boundscheck                   # bzip2: command not found
+f_create_symlinks               # perl: command not found
+f_del_dup_quota                 # bzip2: command not found
+f_detect_junk                   # bzip2: command not found
+f_detect_xfs                    # bzip2: command not found
+f_orphquot                      # bzip2: command not found
+f_super_bad_csum                # bzip2: command not found
+i_bitmaps                       # bzip2: command not found
+j_corrupt_ext_jnl_sb_block      # bzip2: command not found
+j_corrupt_ext_jnl_sb_csum       # bzip2: command not found
+j_recover_csum2_32bit           # bzip2: command not found
+j_recover_csum2_64bit           # bzip2: command not found
+j_recover_csum3_64bit           # bzip2: command not found
