@@ -72,6 +72,66 @@
         },
         {
             "name": "oe_test_podman_3.4.4.2_18"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_26"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_22"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_27"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_28"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_DK_01"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_21"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_DK_02"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_24"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_25"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_23"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_04"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_08"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_12"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_07"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_09"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_11"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_10"
+        },
+        {
+            "name": "oe_test_podman_3.4.4.2_DK_03"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_06"
+        },
+        {
+            "name": "oe_test_podman_DK_3.4.4.2_05"
         }
     ]
 }
