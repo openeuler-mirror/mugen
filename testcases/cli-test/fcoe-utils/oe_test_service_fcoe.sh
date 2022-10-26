@@ -22,18 +22,25 @@ source "../common/common_lib.sh"
 function pre_test() {
     LOG_INFO "Start environmental preparation."
     DNF_INSTALL fcoe-utils
+    service=fcoe.service
+    log_time=$(date '+%Y-%m-%d %T')
     LOG_INFO "End of environmental preparation!"
 }
 
 function run_test() {
     LOG_INFO "Start testing..."
-    test_execution fcoe.service
-    test_reload fcoe.service
+    test_restart ${service}
+    test_enabled ${service}
+    journalctl --since "${log_time}" -u "${service}" | grep -i "fail\|error" | grep -v -i "DEBUG\|INFO\|WARNING" |
+    grep -v "error 9 Bad file descriptor" | grep -v "Failed write req D len 1"
+    CHECK_RESULT $? 0 1 "There is an error message for the log of ${service}"
+    test_reload ${service}
     LOG_INFO "Finish test!"
 }
 
 function post_test() {
     LOG_INFO "start environment cleanup."
+    systemctl stop fcoe.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

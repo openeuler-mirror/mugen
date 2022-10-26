@@ -28,16 +28,13 @@ function pre_test() {
 function run_test() {
     LOG_INFO "Start to run test."
     test_execution httpd.socket
-    systemctl start httpd.socket
-    systemctl reload httpd.socket 2>&1 | grep "Job type reload is not applicable for unit httpd.socket"
-    CHECK_RESULT $?
-    systemctl status httpd.socket | grep "Active: active"
-    CHECK_RESULT $?
+    test_reload httpd.socket
     LOG_INFO "End of the test."
 }
 
 function post_test() {
     LOG_INFO "start environment cleanup."
+    systemctl stop httpd.socket
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

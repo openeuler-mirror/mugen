@@ -27,6 +27,7 @@ function pre_test() {
     sed -i "/Group=hadoop/a SuccessExitStatus=143" /usr/lib/systemd/system/hadoop-namenode.service
     systemctl daemon-reload
     expect <<EOF
+        set timeout 600
         spawn sudo -u hdfs hdfs namenode -format
         expect {
             "(Y or N)" {

@@ -21,8 +21,13 @@ source "../common/common_lib.sh"
 
 function pre_test() {
     LOG_INFO "Start environmental preparation."
-    DNF_INSTALL alsa-utils
-    rm -rf /etc/alsa/state-daemon.conf
+    if ! lspci | grep -i audio; then
+        LOG_INFO "The environment does not support testing"
+        exit 0
+    else
+        DNF_INSTALL alsa-utils
+        mv /etc/alsa/state-daemon.conf /etc/alsa/state-daemon.conf_bak
+    fi
     LOG_INFO "End of environmental preparation!"
 }
 
@@ -35,6 +40,7 @@ function run_test() {
 
 function post_test() {
     LOG_INFO "start environment cleanup."
+    mv /etc/alsa/state-daemon.conf_bak /etc/alsa/state-daemon.conf
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }

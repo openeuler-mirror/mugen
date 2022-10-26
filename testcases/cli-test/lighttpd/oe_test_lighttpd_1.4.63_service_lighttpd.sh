@@ -28,12 +28,22 @@ function pre_test() {
 function run_test() {
     LOG_INFO "Start testing..."
     test_execution lighttpd.service
-    test_reload lighttpd.service
+    systemctl start lighttpd.service
+    sed -i 's\/usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf\/usr/sbin/lighttpd -V -f /etc/lighttpd/lighttpd.conf\g' /usr/lib/systemd/system/lighttpd.service
+    systemctl daemon-reload
+    systemctl reload lighttpd.service
+    CHECK_RESULT $? 0 0 "lighttpd.service reload failed"
+    systemctl status lighttpd.service | grep "Active: active"
+    CHECK_RESULT $? 0 0 "lighttpd.service reload causes the service status to change"
     LOG_INFO "Finish test!"
 }
 
 function post_test() {
     LOG_INFO "start environment cleanup."
+    sed -i 's\/usr/sbin/lighttpd -V -f /etc/lighttpd/lighttpd.conf\/usr/sbin/lighttpd -D -f /etc/lighttpd/lighttpd.conf\g' /usr/lib/systemd/system/lighttpd.service
+    systemctl daemon-reload
+    systemctl reload lighttpd.service
+    systemctl stop lighttpd.service
     DNF_REMOVE
     LOG_INFO "Finish environment cleanup!"
 }
