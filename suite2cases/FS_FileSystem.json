@@ -1,0 +1,39 @@
+{
+    "path": "${OET_PATH}/testcases/system-test/fs-test/FS_FileSystem",
+    "add disk": [20],
+    "machine num": 2,
+    "cases": [
+        {
+            "name": "oe_test_FSIO_change_fs"
+        },
+        {
+            "name": "oe_test_FSIO_check_fs_mounted"
+        },
+        {
+            "name": "oe_test_FSIO_check_fs_type"
+        },
+        {
+            "name": "oe_test_FSIO_create_ext3"
+        },
+        {
+            "name": "oe_test_FSIO_create_ext4"
+        },
+        {
+            "name": "oe_test_FSIO_create_xfs"
+        },
+        {
+            "name": "oe_test_FSIO_dd_mkfs"
+        },
+        {
+            "name": "oe_test_FSIO_ext3_resize2fs"
+        },
+        {
+            "name": "oe_test_FSIO_ext4_e4defrag"
+        },
+        {
+            "name": "oe_test_FSIO_ext4_resize2fs"
+        }
+
+    ]
+}
+
