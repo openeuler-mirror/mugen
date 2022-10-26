@@ -327,6 +327,39 @@
         },
         {
             "name": "oe_test_ip_ipv6_04"
-        }
+        },
+        {
+            "name": "oe_test_iproute_ipv6_01"
+        },
+        {
+            "name": "oe_test_iproute"
+        },
+        {
+            "name": "oe_test_ip_rule_01"
+        },
+        {
+            "name": "oe_test_ip_rule_02"
+        },
+        {
+            "name": "oe_test_iptables-save"
+        },
+        {
+            "name": "oe_test_iptables"
+        },
+        {
+            "name": "oe_test_ipv6_BRIDGE"
+        },
+        {
+            "name": "oe_test_ipv6_dnsmasq"
+        },
+        {
+            "name": "oe_test_IPV6_traceroute6_01"
+        },
+        {
+            "name": "oe_test_IPV6_traceroute6_02"
+        },
+        {
+            "name": "oe_test_IPV6_traceroute6_tracepath6"
+        },
     ]
 }
