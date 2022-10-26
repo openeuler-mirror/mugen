@@ -32,6 +32,68 @@
         },
         {
             "name": "oe_test_FSIO_ext4_resize2fs"
+        },
+        {
+            "name": "oe_test_FSIO_loop_fs"
+        },
+        {
+            "name": "oe_test_FSIO_mount_automount",
+            "machine num": 2,
+            "add disk": [20]
+        },
+        {
+            "name": "oe_test_FSIO_mount_block_dir"
+        },
+        {
+            "name": "oe_test_FSIO_mount_character_dir"
+        },
+        {
+            "name": "oe_test_FSIO_mount_empty_dir"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext3_ro"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext3_rw"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext3_setData"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext3_setErrors"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext3_sync"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext3_to_ext4"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_block_validity"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_delalloc"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_discard"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_noblock_validity"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_nodiscard"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_ro"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_rw"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_setData"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_setErrors"
         }
 
     ]
