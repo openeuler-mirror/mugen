@@ -118,12 +118,13 @@ function REMOVE_FS() {
     point_list=($1)
     for i in $(seq 0 $((${#point_list[@]} - 1))); do
         tmp=${point_list[$i]}
-        [[ $tmp =~ "point" ]] && {
-            lv=$(df -T | grep $tmp | awk '{print $1}')
-            umount -f $tmp
-            rm -rf $tmp
-            DELETE_LV $lv
-        }
+        lv=$(df -T | grep $tmp | awk '{print $1}')
+        if [[ $lv == "" ]]; then
+            continue
+        fi
+        umount -f $tmp
+        rm -rf $tmp
+        DELETE_LV $lv
     done
 }
 
