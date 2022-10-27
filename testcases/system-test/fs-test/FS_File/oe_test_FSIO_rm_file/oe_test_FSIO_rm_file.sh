@@ -20,6 +20,8 @@ source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_test() {
     LOG_INFO "Start environment preparation."
+    old_lang=$LANG
+    export LANG=en_US.utf-8
     cur_date=$(date +%Y%m%d%H%M%S)
     cp ./test.sh /tmp/testfile$cur_date
     bash /tmp/testfile$cur_date &
@@ -31,11 +33,11 @@ function pre_test() {
 function run_test() {
     LOG_INFO "Start to run test."
     rm -f /tmp/testfile$cur_date
-    ls /tmp | grep /tmp/testfile$cur_date
+    ls /tmp | grep testfile$cur_date
     CHECK_RESULT $? 1 0 "Remove file /tmp/testfile$cur_date which used on backend failed."
     rm -f /mnt/accessfile$cur_date 2>&1 | grep "Operation not permitted"
     CHECK_RESULT $? 0 0 "Remove file /mnt/accessfile$cur_date which doesn't have access unexpectly."
-    rm -f /tmp/noexist$cur_date 2>&1 | grep "No such file or directory"
+    rm /tmp/noexist$cur_date 2>&1 | grep "No such file or directory"
     CHECK_RESULT $? 0 0 "The msg of remove non-exist file is error."
     LOG_INFO "End to run test."
 }
@@ -44,6 +46,7 @@ function post_test() {
     LOG_INFO "Start to restore the test environment."
     chattr -i /mnt/accessfile$cur_date
     rm -f /mnt/accessfile$cur_date
+    export LANG=${old_lang}
     LOG_INFO "End to restore the test environment."
 }
 
