@@ -94,8 +94,69 @@
         },
         {
             "name": "oe_test_FSIO_mount_ext4_setErrors"
+        },
+        {
+            "name": "oe_test_FSIO_mount_ext4_sync"
+        },
+        {
+            "name": "oe_test_FSIO_mount_nonempty_dir"
+        },
+        {
+            "name": "oe_test_FSIO_mount_reboot",
+            "machine num": 2,
+            "add disk": [20]
+        },
+        {
+            "name": "oe_test_FSIO_mount_remount"
+        },
+        {
+            "name": "oe_test_FSIO_mount_umount_ext3"
+        },
+        {
+            "name": "oe_test_FSIO_mount_umount_ext4"
+        },
+        {
+            "name": "oe_test_FSIO_mount_umount_xfs"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_dax"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_discard"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_nodiscard"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_ro"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_rw"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_sync"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_xfsdump"
+        },
+        {
+            "name": "oe_test_FSIO_mount_xfs_xfsrestore"
+        },
+        {
+            "name": "oe_test_FSIO_mv_rm_mount"
+        },
+        {
+            "name": "oe_test_FSIO_overlay_modify_1"
+        },
+        {
+            "name": "oe_test_FSIO_overlay_modify_2"
+        },
+        {
+            "name": "oe_test_FSIO_overlay_modify_3"
+        },
+        {
+            "name": "oe_test_FSIO_overlay_mount"
         }
-
     ]
 }
 
