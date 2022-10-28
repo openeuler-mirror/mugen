@@ -364,5 +364,35 @@
         {
             "name": "oe_test_IPV6_traceroute6_tracepath6"
         },
+        {
+            "name": "oe_test_ipv6_VLAN_01"
+        },
+        {
+            "name": "oe_test_ipv6_VLAN_02"
+        },
+        {
+            "name": "oe_test_lldpad"
+        },
+        {
+            "name": "oe_test_iscsid"
+        },
+        {
+            "name": "oe_test_less"
+        },
+        {
+            "name": "oe_test_libcgroup_01"
+        },
+        {
+            "name": "oe_test_libcgroup_02"
+        },
+        {
+            "name": "oe_test_libcgroup_03"
+        },
+        {
+            "name": "oe_test_libcgroup_04"
+        },
+        {
+            "name": "oe_test_libuser_sm"
+        }
     ]
 }

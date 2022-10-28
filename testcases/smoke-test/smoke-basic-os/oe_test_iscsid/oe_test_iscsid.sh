@@ -12,35 +12,41 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/22
+# @Date      :   2022/06/09
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of hwclock
+# @Desc      :   Test the basic functions of open-iscsi
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_test() {
     LOG_INFO "Start to prepare the test environment."
-    OLD_LANG=$LANG
-    export LANG=en_US.UTF-8
+    DNF_INSTALL open-iscsi
     LOG_INFO "End to prepare the test environment."
 }
 
 function run_test() {
     LOG_INFO "Start to run test."
-    hwclock &
-    hwclock >testlog 2>&1
-    SLEEP_WAIT 6
-    grep "Cannot access" testlog
-    CHECK_RESULT $? 0 0 "Failed to execute hwclock"
+    flag=1
+    while ((flag < 20)); do
+        systemctl start iscsid
+        CHECK_RESULT $? 0 0 "Failed to start iscsid"
+        SLEEP_WAIT 3
+        systemctl status iscsid | grep running
+        CHECK_RESULT $? 0 0 "Service status not start"
+        systemctl stop iscsid
+        CHECK_RESULT $? 0 0 "Failed to stop iscsid"
+        SLEEP_WAIT 3
+        systemctl status iscsid | grep dead
+        CHECK_RESULT $? 0 0 "Service status not stop"
+        let flag+=1
+    done
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf testlog
-    kill -9 $(pgrep hwclock)
-    export LANG=${OLD_LANG}
+    DNF_REMOVE
     LOG_INFO "End to restore the test environment."
 }
 

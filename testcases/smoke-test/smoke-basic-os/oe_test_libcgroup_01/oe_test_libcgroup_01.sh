@@ -12,35 +12,35 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/22
+# @Date      :   2022/06/13
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of hwclock
+# @Desc      :   Test cgcreate and cgdelete
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_test() {
     LOG_INFO "Start to prepare the test environment."
-    OLD_LANG=$LANG
-    export LANG=en_US.UTF-8
+    DNF_INSTALL libcgroup
     LOG_INFO "End to prepare the test environment."
 }
 
 function run_test() {
     LOG_INFO "Start to run test."
-    hwclock &
-    hwclock >testlog 2>&1
-    SLEEP_WAIT 6
-    grep "Cannot access" testlog
-    CHECK_RESULT $? 0 0 "Failed to execute hwclock"
+    cgcreate -g cpu:test
+    CHECK_RESULT $? 0 0 "Failed to execute cgcreate"
+    test -d /sys/fs/cgroup/cpu/test/
+    CHECK_RESULT $? 0 0 "File not exist"
+    cgdelete -g cpu:test
+    CHECK_RESULT $? 0 0 "Failed to execute cgdelete"
+    test -d /sys/fs/cgroup/cpu/test/
+    CHECK_RESULT $? 0 1 "File exist"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf testlog
-    kill -9 $(pgrep hwclock)
-    export LANG=${OLD_LANG}
+    DNF_REMOVE
     LOG_INFO "End to restore the test environment."
 }
 

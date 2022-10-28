@@ -12,35 +12,43 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/22
+# @Date      :   2022/07/07
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of hwclock
+# @Desc      :   Test configure ipv6 vlan
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_test() {
     LOG_INFO "Start to prepare the test environment."
-    OLD_LANG=$LANG
-    export LANG=en_US.UTF-8
+    ip link add dev vlan.1 link ${NODE1_NIC} type vlan id 1
     LOG_INFO "End to prepare the test environment."
 }
 
 function run_test() {
     LOG_INFO "Start to run test."
-    hwclock &
-    hwclock >testlog 2>&1
-    SLEEP_WAIT 6
-    grep "Cannot access" testlog
-    CHECK_RESULT $? 0 0 "Failed to execute hwclock"
+    ip -4 addr add 127.127.0.1/24 dev vlan.1
+    CHECK_RESULT $? 0 0 "Failed to add ipv4"
+    ip -4 addr show | grep "127.127.0.1/24"
+    CHECK_RESULT $? 0 0 "Failed to show ipv4"
+    ip -6 addr add ::3/24 dev vlan.1
+    CHECK_RESULT $? 0 0 "Failed to add ipv6"
+    ip -6 addr show | grep "::3/24"
+    CHECK_RESULT $? 0 0 "Failed to show ipv6"
+    ip -4 addr del 127.127.0.1/24 dev vlan.1
+    CHECK_RESULT $? 0 0 "Failed to delete ipv4"
+    ip -4 addr show | grep "127.127.0.1/24"
+    CHECK_RESULT $? 0 1 "Succeed to show ipv4"
+    ip -6 addr del ::3/24 dev vlan.1
+    CHECK_RESULT $? 0 0 "Failed to delete ipv6"
+    ip -6 addr show | grep "::3/24"
+    CHECK_RESULT $? 0 1 "Succeed to show ipv6"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf testlog
-    kill -9 $(pgrep hwclock)
-    export LANG=${OLD_LANG}
+    ip link del dev vlan.1 link ${NODE1_NIC} type vlan id 1
     LOG_INFO "End to restore the test environment."
 }
 
