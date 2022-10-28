@@ -152,6 +152,9 @@
             "name": "oe_test_server_git_install"
         },
         {
+            "name": "oe_test_sos"
+        },
+        {
             "name": "oe_test_reboot",
             "machine num": 2
         },
