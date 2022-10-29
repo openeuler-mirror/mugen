@@ -6,6 +6,9 @@
         },
         {
             "name": "oe_test_kernel_hello_world_test"
+        },
+        {
+            "name": "oe_test_cpp_hello_world_test"
         }
     ]
 }

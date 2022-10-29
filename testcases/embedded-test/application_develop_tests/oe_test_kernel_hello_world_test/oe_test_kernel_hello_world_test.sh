@@ -22,9 +22,11 @@ source ${OET_PATH}/libs/locallibs/common_lib.sh
 function run_test() {
     LOG_INFO "Start to run test."
 
-    ls ./kernel_hello_world.ko
+    test -f ./kernel_hello_world.ko
     CHECK_RESULT $? 0 0 "no kernel hello world ko file build fail"
     chmod 777 ./kernel_hello_world.ko
+    ls -l ./kernel_hello_world.ko | grep "\-rwxrwxrwx"
+    CHECK_RESULT $? 0 0 "kernel hello world ko chmod fail"
 
     insmod ./kernel_hello_world.ko
     CHECK_RESULT $? 0 0 "insdmod kernel hello world fail"
