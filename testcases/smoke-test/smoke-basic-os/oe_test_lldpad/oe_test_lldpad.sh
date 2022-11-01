@@ -12,35 +12,37 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/22
+# @Date      :   2022/07/12
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of hwclock
+# @Desc      :   Test the basic functions of lldpad
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_test() {
     LOG_INFO "Start to prepare the test environment."
-    OLD_LANG=$LANG
-    export LANG=en_US.UTF-8
+    DNF_INSTALL lldpad
+    lldpad_ver=$(rpm -qa lldpad | awk -F '-' '{print $2}')
     LOG_INFO "End to prepare the test environment."
 }
 
 function run_test() {
     LOG_INFO "Start to run test."
-    hwclock &
-    hwclock >testlog 2>&1
-    SLEEP_WAIT 6
-    grep "Cannot access" testlog
-    CHECK_RESULT $? 0 0 "Failed to execute hwclock"
+    lldpad -v | grep $lldpad_ver
+    CHECK_RESULT $? 0 0 "Failed to execute lldpad -v"
+    lldpad -h 2>&1 | grep "usage:"
+    CHECK_RESULT $? 0 0 "Failed to execute lldpad -h"
+    lldpad -d
+    CHECK_RESULT $? 0 0 "Failed to execute lldpad -d"
+    ps -aux | grep lld
+    CHECK_RESULT $? 0 0 "Failed to display lld"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
-    rm -rf testlog
-    kill -9 $(pgrep hwclock)
-    export LANG=${OLD_LANG}
+    kill -9 $(pgrep lldpad)
+    DNF_REMOVE
     LOG_INFO "End to restore the test environment."
 }
 

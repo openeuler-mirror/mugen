@@ -12,35 +12,25 @@
 # #############################################
 # @Author    :   liujingjing
 # @Contact   :   liujingjing25812@163.com
-# @Date      :   2022/06/22
+# @Date      :   2022/06/10
 # @License   :   Mulan PSL v2
-# @Desc      :   Test the basic functions of hwclock
+# @Desc      :   Test the basic functions of less
 # ############################################
 
 source ${OET_PATH}/libs/locallibs/common_lib.sh
 
-function pre_test() {
-    LOG_INFO "Start to prepare the test environment."
-    OLD_LANG=$LANG
-    export LANG=en_US.UTF-8
-    LOG_INFO "End to prepare the test environment."
-}
-
 function run_test() {
     LOG_INFO "Start to run test."
-    hwclock &
-    hwclock >testlog 2>&1
-    SLEEP_WAIT 6
-    grep "Cannot access" testlog
-    CHECK_RESULT $? 0 0 "Failed to execute hwclock"
+    echo q | less /var/log/messages >testlog
+    CHECK_RESULT $? 0 0 "Failed to execute less"
+    test -s testlog
+    CHECK_RESULT $? 0 0 "File testlog not exist"
     LOG_INFO "End to run test."
 }
 
 function post_test() {
     LOG_INFO "Start to restore the test environment."
     rm -rf testlog
-    kill -9 $(pgrep hwclock)
-    export LANG=${OLD_LANG}
     LOG_INFO "End to restore the test environment."
 }
 
