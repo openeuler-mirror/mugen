@@ -20,11 +20,13 @@ source ${OET_PATH}/libs/locallibs/common_lib.sh
 
 function pre_test() {
     LOG_INFO "Start environment preparation."
+    old_lang=$LANG
+    export LANG=en_US.utf-8
     cur_date=$(date +%Y%m%d%H%M%S)
     dir="testDir"$cur_date
     file="testFile"$cur_date
     mkdir /tmp/$dir
-    touch /tmp/$file
+    touch /tmp/$dir/$file
     LOG_INFO "End of environmental preparation!"
 }
 
@@ -36,7 +38,7 @@ function run_test() {
     inode2=$(stat /tmp/$soft_link | grep Inode | cut -d : -f 3 | awk '{print $1}')
     [[ $inode1 -ne $inode2 ]]
     CHECK_RESULT $? 0 0 "Check inode failed."
-    ls -l /tmp/$soft_link | grep $file
+    ls /tmp/$soft_link | grep $file
     CHECK_RESULT $? 0 0 "The sort link directory has some errors."
     LOG_INFO "End to run test."
 }
@@ -44,6 +46,7 @@ function run_test() {
 function post_test() {
     LOG_INFO "Start to restore the test environment."
     rm -rf /tmp/$soft_link /tmp/$dir
+    export LANG=${old_lang}
     LOG_INFO "End to restore the test environment."
 }
 

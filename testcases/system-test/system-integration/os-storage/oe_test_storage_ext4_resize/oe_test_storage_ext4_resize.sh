@@ -21,6 +21,8 @@ function pre_test() {
     LOG_INFO "Start environment preparation."
     check_free_disk
     echo -e "n\np\n1\n\n+100M\np\nw\n" | fdisk /dev/"${local_disk}"
+    old_lang=$LANG
+    export LANG=en_US.utf-8
     LOG_INFO "Environmental preparation is over."
 }
 
@@ -30,7 +32,9 @@ function run_test() {
     CHECK_RESULT $?
     e2fsck -y /dev/"${local_disk1}"
     CHECK_RESULT $?
-    resize2fs /dev/"${local_disk1}" 30000
+    systemsize=$(resize2fs -P "/dev/${local_disk1}" 2>&1 | sed -n 'p' | awk -F ": " '{if (NR>1) print $NF}')
+    CHECK_RESULT $?
+    resize2fs "/dev/${local_disk1}" $[${systemsize}+10]
     CHECK_RESULT $?
     LOG_INFO "End of testcase execution!"
 }
@@ -38,6 +42,7 @@ function run_test() {
 function post_test() {
     LOG_INFO "start environment cleanup."
     echo -e "d\np\nw\n" | fdisk /dev/"${local_disk}"
+    export LANG=${old_lang}
     LOG_INFO "Finish environment cleanup."
 }
 
