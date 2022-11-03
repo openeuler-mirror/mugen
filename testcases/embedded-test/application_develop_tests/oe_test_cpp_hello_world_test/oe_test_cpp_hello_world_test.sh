@@ -22,14 +22,14 @@ source ${OET_PATH}/libs/locallibs/common_lib.sh
 function run_test() {
     LOG_INFO "Start to run test."
 
-    test -f ./hello_world
-    CHECK_RESULT $? 0 0 "no hello world bin file build fail"
-    chmod 777 ./hello_world
-    ls -l ./hello_world | grep "\-rwxrwxrwx"
-    CHECK_RESULT $? 0 0 "hello world chmod fail"
+    test -f hello_world_cpp
+    CHECK_RESULT $? 0 0 "no hello world cpp bin file build fail"
+    chmod 777 ./hello_world_cpp
+    ls -l ./hello_world_cpp | grep "\-rwxrwxrwx"
+    CHECK_RESULT $? 0 0 "hello world cpp chmod fail"
 
-    ./hello_world | grep "hello world"
-    CHECK_RESULT $? 0 0 "hello world out put fail"
+    ./hello_world_cpp | grep "Hello world cpp"
+    CHECK_RESULT $? 0 0 "hello world cpp out put fail"
 
     LOG_INFO "End to run test."
 }
