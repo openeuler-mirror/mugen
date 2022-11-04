@@ -20,6 +20,7 @@
 source ../common/common_podman.sh
 function pre_test() {
     LOG_INFO "Start environment preparation."
+    DNF_INSTALL cpp
     deploy_env
     podman rm --all
     podman rmi --all
@@ -58,6 +59,7 @@ function post_test() {
     LOG_INFO "start environment cleanup."
     rm -rf $(ls | grep -vE '.sh') common*
     clear_env
+    DNF_REMOVE
     LOG_INFO "Finish environment cleanup."
 }
 

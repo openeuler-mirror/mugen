@@ -12,9 +12,9 @@
 # #############################################
 # @Author    :   duanxuemin
 # @Contact   :   duanxuemin@163.com
-# @Date      :   2021/01/11
+# @Date      :   2022/10/11
 # @License   :   Mulan PSL v2
-# @Desc      :   The usage of commands in podman package
+# @Desc      :   The usage of commands in docker package
 # ############################################
 
 source "../common/common3.4.4.2_podman.sh"
@@ -26,35 +26,35 @@ function pre_test() {
 
 function run_test() {
     LOG_INFO "Start to run test."
-    ID=$(podman create --tmpfs /tmp:rw alpine ls)
-    podman inspect $ID | grep "/tmp:rw"
+    ID=$(docker create --tmpfs /tmp:rw alpine ls)
+    docker inspect $ID | grep "/tmp:rw"
     CHECK_RESULT $? 0 0 'check /tmp:rw failed'
-    ID=$(podman create --userns host alpine ls)
-    podman inspect $ID | grep 'UsernsMode'
+    ID=$(docker create --userns host alpine ls)
+    docker inspect $ID | grep 'UsernsMode'
     CHECK_RESULT $? 0 0 'check UsernsMode failed'
-    ID=$(podman create --uts host alpine ls)
-    podman inspect $ID | grep '"UTSMode": "host"'
+    ID=$(docker create --uts host alpine ls)
+    docker inspect $ID | grep '"UTSMode": "host"'
     CHECK_RESULT $? 0 0 'check UTSMode host failed'
-    ID=$(podman create --name example alpine ls)
-    podman inspect ${ID} | grep '"Name": "example"'
+    ID=$(docker create --name example alpine ls)
+    docker inspect ${ID} | grep '"Name": "example"'
     CHECK_RESULT $? 0 0 'check Name - example failed'
-    ID=$(podman create --volume /tmp:/tmp:z alpine ls)
-    podman inspect $ID | grep -i '"destination": "/tmp"'
+    ID=$(docker create --volume /tmp:/tmp:z alpine ls)
+    docker inspect $ID | grep -i '"destination": "/tmp"'
     CHECK_RESULT $? 0 0 'check destination failed'
-    ID=$(podman create --workdir /tmp alpine ls)
-    podman inspect $ID | grep '"WorkingDir": "/tmp"'
+    ID=$(docker create --workdir /tmp alpine ls)
+    docker inspect $ID | grep '"WorkingDir": "/tmp"'
     CHECK_RESULT $? 0 0 'check WorkingDir failed'
-    podman rmi -f $(podman images -q)
-    CHECK_RESULT $? 0 0 'check podman rmi -f $(podman images -q) failed'
-    podman images | grep "registry.access.redhat.com/ubi8-minimal"
-    CHECK_RESULT $? 1 0 'check podman images | grep "registry.access.redhat.com/ubi8-minimal" failed'
-    podman pull registry.access.redhat.com/ubi8-minimal
-    podman images | grep "registry.access.redhat.com/ubi8-minimal"
-    CHECK_RESULT $? 0 0 'check podman images | grep "registry.access.redhat.com/ubi8-minimal" failed'
-    podman rmi --all
-    CHECK_RESULT $? 0 0 'check podman rmi --all failed'
-    podman images | grep "registry.access.redhat.com/ubi8-minimal"
-    CHECK_RESULT $? 1 0 'check podman images | grep "registry.access.redhat.com/ubi8-minimal" faileds'
+    docker rmi -f $(docker images -q)
+    CHECK_RESULT $? 0 0 'check docker rmi -f $(docker images -q) failed'
+    docker images | grep "registry.access.redhat.com/ubi8-minimal"
+    CHECK_RESULT $? 1 0 'check docker images | grep "registry.access.redhat.com/ubi8-minimal" failed'
+    docker pull registry.access.redhat.com/ubi8-minimal
+    docker images | grep "registry.access.redhat.com/ubi8-minimal"
+    CHECK_RESULT $? 0 0 'check docker images | grep "registry.access.redhat.com/ubi8-minimal" failed'
+    docker rmi --all
+    CHECK_RESULT $? 0 0 'check docker rmi --all failed'
+    docker images | grep "registry.access.redhat.com/ubi8-minimal"
+    CHECK_RESULT $? 1 0 'check docker images | grep "registry.access.redhat.com/ubi8-minimal" faileds'
     LOG_INFO "End to run test."
 }
 
