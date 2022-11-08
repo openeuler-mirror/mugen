@@ -16,6 +16,9 @@
         {
             "name": "oe_test_tail"
         },
+	{
+            "name": "oe_test_systool"
+        },
         {
             "name": "oe_test_awk"
         },
