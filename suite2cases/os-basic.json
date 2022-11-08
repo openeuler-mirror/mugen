@@ -512,6 +512,9 @@
 	},
 	{
 	    "name": "oe_test_brotli"
+	},
+	{
+	    "name": "oe_test_net_mtr"
 	}
     ]
 }
