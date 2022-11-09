@@ -3,6 +3,9 @@
     "cases": [
         {
             "name": "oe_test_service_arp-ethers"
+        },
+        {
+            "name": "oe_test_netstat_net-tools"
         }
     ]
 }
